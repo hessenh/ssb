@@ -1,0 +1,29 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _redux = require('redux');
+
+var _reactRouterRedux = require('react-router-redux');
+
+var appReducer = (0, _redux.combineReducers)({
+  routing: _reactRouterRedux.routerReducer
+});
+
+var _default = appReducer;
+exports.default = _default;
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(appReducer, 'appReducer', '/Users/hans-olavhessen/Development/React/ssb/src/reducers/index.js');
+
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/hans-olavhessen/Development/React/ssb/src/reducers/index.js');
+}();
+
+;

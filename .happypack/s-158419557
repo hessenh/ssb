@@ -1,0 +1,256 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _superagent = require('superagent');
+
+var _superagent2 = _interopRequireDefault(_superagent);
+
+var _reactChartjs = require('react-chartjs');
+
+var _materialUi = require('material-ui');
+
+var _reactSpinkit = require('react-spinkit');
+
+var _reactSpinkit2 = _interopRequireDefault(_reactSpinkit);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var style = {
+  display: 'flex'
+};
+
+var leftContent = {
+  // width: '30%',
+  width: '30%',
+  margin: '0px'
+};
+
+var rightContent = {
+  textAlign: 'center',
+  width: '100%',
+  margin: '10px'
+};
+
+var listStyle = {
+  width: '100%'
+};
+
+var loadingStyle = {
+  marginTop: '50px',
+  display: 'flex',
+  justifyContent: 'center'
+};
+
+var mapRegions = function mapRegions(index, label) {
+  var regions = [];
+  regions.push([index['01'], label['01']]);
+  regions.push([index['02'], label['02']]);
+  regions.push([index['03'], label['03']]);
+  regions.push([index['04'], label['04']]);
+  regions.push([index['05'], label['05']]);
+  regions.push([index['06'], label['06']]);
+  regions.push([index['07'], label['07']]);
+  regions.push([index['08'], label['08']]);
+  regions.push([index['09'], label['09']]);
+  regions.push([index['10'], label['10']]);
+  regions.push([index['11'], label['11']]);
+  regions.push([index['12'], label['12']]);
+  // regions.push([index['13'], label['13']]);
+  regions.push([index['14'], label['14']]);
+  regions.push([index['15'], label['15']]);
+  regions.push([index['16'], label['16']]);
+  regions.push([index['17'], label['17']]);
+  regions.push([index['18'], label['18']]);
+  regions.push([index['19'], label['19']]);
+  regions.push([index['20'], label['20']]);
+  // sort by value
+  regions.sort(function (a, b) {
+    if (a[1] > b[1]) {
+      return 1;
+    }
+    if (a[1] < b[1]) {
+      return -1;
+    }
+    // a must be equal to b
+    return 0;
+  });
+  return regions;
+};
+
+var mapCategory = function mapCategory(index, label) {
+  var category = [];
+  category.push([index.Folketallet1, label.Folketallet1]);
+  category.push([index.Fodte2, label.Fodte2]);
+  category.push([index.Dode3, label.Dode3]);
+  category.push([index.Fodselsoverskudd4, label.Fodselsoverskudd4]);
+  category.push([index.Innvandring5, label.Innvandring5]);
+  category.push([index.Utvandring6, label.Utvandring6]);
+  category.push([index.Tilflytting7, label.Tilflytting7]);
+  category.push([index.Nettoinnflytting9, label.Nettoinnflytting9]);
+  category.push([index.Folketilvekst10, label.Folketilvekst10]);
+  category.push([index.Folketallet11, label.Folketallet11]);
+  return category;
+};
+
+var mapData = function mapData(value, label, index) {
+  var newValue = value.slice(index * 11, index * 11 + 11);
+  var data = [];
+  for (var i = 1; i < 10; i += 1) {
+    data.push({
+      value: newValue[i],
+      color: '#' + (Math.random() * 0xFFFFFF << 0).toString(16),
+      highlight: '#FF5A5E',
+      label: label[i][1]
+    });
+  }
+  return data;
+};
+
+var Befolkningsendring = function (_Component) {
+  _inherits(Befolkningsendring, _Component);
+
+  function Befolkningsendring(props) {
+    _classCallCheck(this, Befolkningsendring);
+
+    var _this = _possibleConstructorReturn(this, (Befolkningsendring.__proto__ || Object.getPrototypeOf(Befolkningsendring)).call(this, props));
+
+    _this.setRegion = function () {
+      return _this.__setRegion__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    _this.state = {
+      categories: [],
+      regions: [],
+      data: null,
+      fetchedData: false
+    };
+    return _this;
+  }
+
+  _createClass(Befolkningsendring, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      var url = 'http://data.ssb.no/api/v0/dataset/1102.json?lang=no';
+      _superagent2.default.get(url).query({ action: 'edit', city: 'London' }) // query string
+      .end(function (err, res) {
+        if (err) {
+          console.log(err);
+        } else {
+          var ri = res.body.dataset.dimension.Region.category.index;
+          var rl = res.body.dataset.dimension.Region.category.label;
+          var ci = res.body.dataset.dimension.ContentsCode.category.index;
+          var cl = res.body.dataset.dimension.ContentsCode.category.label;
+          var cv = res.body.dataset.value;
+          var c = mapCategory(ci, cl);
+          _this2.setState({
+            regions: mapRegions(ri, rl),
+            categories: c,
+            values: cv,
+            data: mapData(cv, c, 0),
+            fetchedData: true
+          });
+        }
+      });
+    }
+  }, {
+    key: '__setRegion__REACT_HOT_LOADER__',
+    value: function __setRegion__REACT_HOT_LOADER__(value) {
+      this.setState({
+        data: mapData(this.state.values, this.state.categories, value[0])
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this3 = this;
+
+      if (this.state.fetchedData) {
+        return _react2.default.createElement(
+          'div',
+          { style: style },
+          _react2.default.createElement(
+            'div',
+            { style: leftContent },
+            _react2.default.createElement(
+              _materialUi.List,
+              { style: listStyle },
+              this.state.regions.map(function (value) {
+                return _react2.default.createElement(_materialUi.ListItem, {
+                  primaryText: value[1],
+                  key: value[0],
+                  onClick: _this3.setRegion.bind(_this3, value)
+                });
+              })
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { style: rightContent },
+            _react2.default.createElement(
+              'h2',
+              null,
+              'Befolkningsendring'
+            ),
+            _react2.default.createElement(_reactChartjs.PolarArea, { data: this.state.data, width: '500px', height: '300px' })
+          )
+        );
+      }
+      return _react2.default.createElement(
+        'div',
+        { style: loadingStyle },
+        _react2.default.createElement(_reactSpinkit2.default, { spinnerName: 'wandering-cubes' })
+      );
+    }
+  }]);
+
+  return Befolkningsendring;
+}(_react.Component);
+
+var _default = Befolkningsendring;
+exports.default = _default;
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(style, 'style', '/Users/hans-olavhessen/Development/React/ssb/src/modules/views/befolkning/befolkningsendring.jsx');
+
+  __REACT_HOT_LOADER__.register(leftContent, 'leftContent', '/Users/hans-olavhessen/Development/React/ssb/src/modules/views/befolkning/befolkningsendring.jsx');
+
+  __REACT_HOT_LOADER__.register(rightContent, 'rightContent', '/Users/hans-olavhessen/Development/React/ssb/src/modules/views/befolkning/befolkningsendring.jsx');
+
+  __REACT_HOT_LOADER__.register(listStyle, 'listStyle', '/Users/hans-olavhessen/Development/React/ssb/src/modules/views/befolkning/befolkningsendring.jsx');
+
+  __REACT_HOT_LOADER__.register(loadingStyle, 'loadingStyle', '/Users/hans-olavhessen/Development/React/ssb/src/modules/views/befolkning/befolkningsendring.jsx');
+
+  __REACT_HOT_LOADER__.register(mapRegions, 'mapRegions', '/Users/hans-olavhessen/Development/React/ssb/src/modules/views/befolkning/befolkningsendring.jsx');
+
+  __REACT_HOT_LOADER__.register(mapCategory, 'mapCategory', '/Users/hans-olavhessen/Development/React/ssb/src/modules/views/befolkning/befolkningsendring.jsx');
+
+  __REACT_HOT_LOADER__.register(mapData, 'mapData', '/Users/hans-olavhessen/Development/React/ssb/src/modules/views/befolkning/befolkningsendring.jsx');
+
+  __REACT_HOT_LOADER__.register(Befolkningsendring, 'Befolkningsendring', '/Users/hans-olavhessen/Development/React/ssb/src/modules/views/befolkning/befolkningsendring.jsx');
+
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/hans-olavhessen/Development/React/ssb/src/modules/views/befolkning/befolkningsendring.jsx');
+}();
+
+;

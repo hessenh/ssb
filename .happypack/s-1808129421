@@ -1,0 +1,138 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _AppBar = require('material-ui/AppBar');
+
+var _AppBar2 = _interopRequireDefault(_AppBar);
+
+var _IconButton = require('material-ui/IconButton');
+
+var _IconButton2 = _interopRequireDefault(_IconButton);
+
+var _MenuItem = require('material-ui/MenuItem');
+
+var _MenuItem2 = _interopRequireDefault(_MenuItem);
+
+var _moreVert = require('material-ui/svg-icons/navigation/more-vert');
+
+var _moreVert2 = _interopRequireDefault(_moreVert);
+
+var _Drawer = require('material-ui/Drawer');
+
+var _Drawer2 = _interopRequireDefault(_Drawer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var NavigationBar = function (_Component) {
+  _inherits(NavigationBar, _Component);
+
+  function NavigationBar(props) {
+    _classCallCheck(this, NavigationBar);
+
+    var _this = _possibleConstructorReturn(this, (NavigationBar.__proto__ || Object.getPrototypeOf(NavigationBar)).call(this, props));
+
+    _this.handleToggle = function () {
+      return _this.__handleToggle__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    _this.handleClose = function () {
+      return _this.__handleClose__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    _this.state = { open: false };
+    return _this;
+  }
+
+  _createClass(NavigationBar, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {}
+  }, {
+    key: '__handleToggle__REACT_HOT_LOADER__',
+    value: function __handleToggle__REACT_HOT_LOADER__() {
+      return this.setState({ open: !this.state.open });
+    }
+  }, {
+    key: '__handleClose__REACT_HOT_LOADER__',
+    value: function __handleClose__REACT_HOT_LOADER__() {
+      return this.setState({ open: false });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(_AppBar2.default, {
+        titel: 'he',
+        iconClassNameRight: 'muidocs-icon-navigation-expand-more',
+        iconElementLeft: _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            _IconButton2.default,
+            {
+              onTouchTap: this.handleToggle
+            },
+            _react2.default.createElement(_moreVert2.default, null)
+          ),
+          _react2.default.createElement(
+            _Drawer2.default,
+            {
+              docked: false,
+              width: 300,
+              open: this.state.open,
+              onRequestChange: function onRequestChange(open) {
+                return _this2.setState({ open: open });
+              }
+            },
+            _react2.default.createElement(_AppBar2.default, {
+              showMenuIconButton: false
+            }),
+            _react2.default.createElement(
+              _MenuItem2.default,
+              { href: '/befolkningsendring', onTouchTap: this.handleClose },
+              'Befolkningsendring'
+            ),
+            _react2.default.createElement(
+              _MenuItem2.default,
+              { href: '/arealdekke', onTouchTap: this.handleClose },
+              'Areal av land og ferskvann'
+            )
+          )
+        )
+      });
+    }
+  }]);
+
+  return NavigationBar;
+}(_react.Component);
+
+var _default = NavigationBar;
+exports.default = _default;
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(NavigationBar, 'NavigationBar', '/Users/hans-olavhessen/Development/React/ssb/src/modules/views/navigation/navigation.jsx');
+
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/hans-olavhessen/Development/React/ssb/src/modules/views/navigation/navigation.jsx');
+}();
+
+;

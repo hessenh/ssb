@@ -1,0 +1,31 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _redux = require('redux');
+
+var _setupSentry = require('../utils/setupSentry');
+
+var _setupSentry2 = _interopRequireDefault(_setupSentry);
+
+var _sentryMiddleware = require('./sentryMiddleware');
+
+var _sentryMiddleware2 = _interopRequireDefault(_sentryMiddleware);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _default = [(0, _redux.applyMiddleware)((0, _sentryMiddleware2.default)(_setupSentry2.default))];
+exports.default = _default;
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/hans-olavhessen/Development/React/ssb/src/store/middleware.prod.js');
+}();
+
+;

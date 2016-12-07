@@ -1,0 +1,81 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = require('react-redux');
+
+var _reactRouter = require('react-router');
+
+var _reactRouterRedux = require('react-router-redux');
+
+var _MuiThemeProvider = require('material-ui/styles/MuiThemeProvider');
+
+var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
+
+var _getMuiTheme = require('material-ui/styles/getMuiTheme');
+
+var _getMuiTheme2 = _interopRequireDefault(_getMuiTheme);
+
+var _navigation = require('../modules/views/navigation/navigation');
+
+var _navigation2 = _interopRequireDefault(_navigation);
+
+var _Extra = require('./Extra');
+
+var _Extra2 = _interopRequireDefault(_Extra);
+
+var _routes = require('../routes');
+
+var _routes2 = _interopRequireDefault(_routes);
+
+var _theme = require('../theme');
+
+var _theme2 = _interopRequireDefault(_theme);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var muiTheme = (0, _getMuiTheme2.default)(_theme2.default);
+
+var _default = function _default(store) {
+  var history = (0, _reactRouterRedux.syncHistoryWithStore)(_reactRouter.browserHistory, store);
+  return _react2.default.createElement(
+    _MuiThemeProvider2.default,
+    { muiTheme: muiTheme },
+    _react2.default.createElement(
+      _reactRedux.Provider,
+      { store: store },
+      _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_navigation2.default, null),
+        _react2.default.createElement(
+          _reactRouter.Router,
+          { history: history },
+          _routes2.default
+        ),
+        _Extra2.default
+      )
+    )
+  );
+};
+
+exports.default = _default;
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(muiTheme, 'muiTheme', '/Users/hans-olavhessen/Development/React/ssb/src/containers/Root.jsx');
+
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/hans-olavhessen/Development/React/ssb/src/containers/Root.jsx');
+}();
+
+;

@@ -1,0 +1,200 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _superagent = require('superagent');
+
+var _superagent2 = _interopRequireDefault(_superagent);
+
+var _materialUi = require('material-ui');
+
+var _reactChartjs = require('react-chartjs');
+
+var _reactSpinkit = require('react-spinkit');
+
+var _reactSpinkit2 = _interopRequireDefault(_reactSpinkit);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var style = {
+  display: 'flex'
+};
+
+var leftContent = {
+  width: '30%',
+  margin: '10px'
+};
+
+var rightContent = {
+  textAlign: 'center',
+  width: '100%',
+  margin: '10px'
+};
+
+var loadingStyle = {
+  marginTop: '50px',
+  display: 'flex',
+  justifyContent: 'center'
+};
+
+var mapResonse = function mapResonse(respone) {
+  var index = respone.body.dataset.dimension.Region.category.index;
+  var label = respone.body.dataset.dimension.Region.category.label;
+  var value = respone.body.dataset.value;
+  var source = [];
+  var data = [];
+  for (var key in index) {
+    source.push(label[key]);
+
+    var i = index[key] * 2;
+    var tempData = [];
+    tempData.push({
+      value: value[i],
+      color: '#564138',
+      label: 'Landareal'
+    });
+    tempData.push({
+      value: value[i + 1],
+      color: '#2E86AB',
+      label: 'Ferskvann'
+    });
+    data.push(tempData);
+  }
+  return [source, data];
+};
+
+var ArealDekke = function (_Component) {
+  _inherits(ArealDekke, _Component);
+
+  function ArealDekke(props) {
+    _classCallCheck(this, ArealDekke);
+
+    var _this = _possibleConstructorReturn(this, (ArealDekke.__proto__ || Object.getPrototypeOf(ArealDekke)).call(this, props));
+
+    _this.handleUpdateInput = function () {
+      return _this.__handleUpdateInput__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    _this.state = {
+      fetchedData: false,
+      dataSource: []
+    };
+    return _this;
+  }
+
+  _createClass(ArealDekke, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      var url = 'http://data.ssb.no/api/v0/dataset/85430.json?lang=no';
+      _superagent2.default.get(url).query({ action: 'edit', city: 'London' }) // query string
+      .end(function (err, res) {
+        if (err) {
+          console.log(err);
+        } else {
+          var mappedResponse = mapResonse(res);
+          console.log(mappedResponse);
+          _this2.setState({
+            fetchedData: true,
+            dataSource: mappedResponse[0],
+            data: mappedResponse[1][0],
+            areaData: mappedResponse[1]
+          });
+        }
+      });
+    }
+  }, {
+    key: '__handleUpdateInput__REACT_HOT_LOADER__',
+    value: function __handleUpdateInput__REACT_HOT_LOADER__(value) {
+      var index = this.state.dataSource.indexOf(value);
+      if (index > -1) {
+        this.setState({
+          data: this.state.areaData[index]
+        });
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      if (this.state.fetchedData) {
+        return _react2.default.createElement(
+          'div',
+          { style: style },
+          _react2.default.createElement(
+            'div',
+            { style: leftContent },
+            _react2.default.createElement(
+              'h2',
+              null,
+              'S\xF8k p\xE5 kommune'
+            ),
+            _react2.default.createElement(_materialUi.AutoComplete, {
+              hintText: 'Type anything',
+              dataSource: this.state.dataSource,
+              openOnFocus: true,
+              onUpdateInput: this.handleUpdateInput
+            })
+          ),
+          _react2.default.createElement(
+            'div',
+            { style: rightContent },
+            _react2.default.createElement(
+              'h2',
+              null,
+              'Areal av land og ferskvann'
+            ),
+            _react2.default.createElement(_reactChartjs.Doughnut, { data: this.state.data, width: '500px', height: '300px' })
+          )
+        );
+      }
+      return _react2.default.createElement(
+        'div',
+        { style: loadingStyle },
+        _react2.default.createElement(_reactSpinkit2.default, { spinnerName: 'wandering-cubes' })
+      );
+    }
+  }]);
+
+  return ArealDekke;
+}(_react.Component);
+
+var _default = ArealDekke;
+exports.default = _default;
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(style, 'style', '/Users/hans-olavhessen/Development/React/ssb/src/modules/views/areal/arealdekke.jsx');
+
+  __REACT_HOT_LOADER__.register(leftContent, 'leftContent', '/Users/hans-olavhessen/Development/React/ssb/src/modules/views/areal/arealdekke.jsx');
+
+  __REACT_HOT_LOADER__.register(rightContent, 'rightContent', '/Users/hans-olavhessen/Development/React/ssb/src/modules/views/areal/arealdekke.jsx');
+
+  __REACT_HOT_LOADER__.register(loadingStyle, 'loadingStyle', '/Users/hans-olavhessen/Development/React/ssb/src/modules/views/areal/arealdekke.jsx');
+
+  __REACT_HOT_LOADER__.register(mapResonse, 'mapResonse', '/Users/hans-olavhessen/Development/React/ssb/src/modules/views/areal/arealdekke.jsx');
+
+  __REACT_HOT_LOADER__.register(ArealDekke, 'ArealDekke', '/Users/hans-olavhessen/Development/React/ssb/src/modules/views/areal/arealdekke.jsx');
+
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/hans-olavhessen/Development/React/ssb/src/modules/views/areal/arealdekke.jsx');
+}();
+
+;

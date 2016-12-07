@@ -1,0 +1,30 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reduxDevtools = require('redux-devtools');
+
+var _DevTools = require('../containers/DevTools');
+
+var _DevTools2 = _interopRequireDefault(_DevTools);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable no-undef */
+
+var _default = [window.devToolsExtension ? window.devToolsExtension() : _DevTools2.default.instrument(), (0, _reduxDevtools.persistState)(window.location.href.match(/[?&]debug_session=([^&#]+)\b/))];
+exports.default = _default;
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/hans-olavhessen/Development/React/ssb/src/store/middleware.dev.js');
+}();
+
+;

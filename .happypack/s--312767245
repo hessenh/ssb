@@ -1,0 +1,36 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _ravenJs = require('raven-js');
+
+var _ravenJs2 = _interopRequireDefault(_ravenJs);
+
+var _environment = require('../modules/environment');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var sentryDsn = 'https://a2841264fbe645b8bbcf863ce2492e7d@app.getsentry.com/75462';
+
+var _default = function _default() {
+  if (_environment.environment.SENTRY_ENABLED) {
+    _ravenJs2.default.config(sentryDsn).install();
+  }
+};
+
+exports.default = _default;
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(sentryDsn, 'sentryDsn', '/Users/hans-olavhessen/Development/React/ssb/src/utils/setupSentry.js');
+
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/hans-olavhessen/Development/React/ssb/src/utils/setupSentry.js');
+}();
+
+;

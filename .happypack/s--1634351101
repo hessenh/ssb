@@ -1,0 +1,31 @@
+'use strict';
+
+/* eslint-disable global-require */
+switch (process.env.BUILD_ENV) {
+  case 'local':
+    module.exports = require('./local');
+    break;
+  case 'development':
+    module.exports = require('./development');
+    break;
+  case 'staging':
+    module.exports = require('./staging');
+    break;
+  case 'sandbox':
+    module.exports = require('./sandbox');
+    break;
+  case 'production':
+    module.exports = require('./production');
+    break;
+  default:
+    module.exports = require('./local');
+}
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+}();
+
+;

@@ -1,0 +1,23 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var uDarkBlue = exports.uDarkBlue = '#001e28';
+var uBlue = exports.uBlue = '#0A171E';
+var uOrange = exports.uOrange = '#F9710E';
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(uDarkBlue, 'uDarkBlue', '/Users/hans-olavhessen/Development/React/ssb/src/styles/colors.js');
+
+  __REACT_HOT_LOADER__.register(uBlue, 'uBlue', '/Users/hans-olavhessen/Development/React/ssb/src/styles/colors.js');
+
+  __REACT_HOT_LOADER__.register(uOrange, 'uOrange', '/Users/hans-olavhessen/Development/React/ssb/src/styles/colors.js');
+}();
+
+;

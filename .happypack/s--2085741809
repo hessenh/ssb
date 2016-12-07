@@ -1,0 +1,51 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _colors = require('material-ui/styles/colors');
+
+var _colorManipulator = require('material-ui/utils/colorManipulator');
+
+var ColorManipulator = _interopRequireWildcard(_colorManipulator);
+
+var _colors2 = require('./colors');
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var _default = {
+  primary1Color: _colors2.uBlue,
+  primary2Color: _colors2.uBlue,
+  primary3Color: _colors.lightBlack,
+  accent1Color: _colors2.uOrange,
+  accent2Color: _colors.blueGrey100,
+  accent3Color: _colors.grey800,
+  textColor: _colors2.uDarkBlue,
+  alternateTextColor: _colors.white,
+  canvasColor: _colors.white,
+  borderColor: _colors.grey500,
+  disabledColor: ColorManipulator.fade(_colors.darkBlack, 0.3),
+  pickerHeaderColor: _colors.lightBlue200,
+  clockCircleColor: ColorManipulator.fade(_colors.darkBlack, 0.07),
+  shadowColor: _colors.grey500,
+  backgroundColor: _colors.white,
+  menuColor: _colors.grey50,
+  failedColor: _colors.red500,
+
+  bgContrast1Color: _colors.grey300,
+  bgContrast2Color: _colors.grey100,
+  bgContrast3Color: _colors.grey50
+};
+exports.default = _default;
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/hans-olavhessen/Development/React/ssb/src/styles/palette.js');
+}();
+
+;
